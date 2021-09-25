@@ -4,6 +4,8 @@ import 'package:shoppee/models/utilities_model.dart';
 
 class HomeController extends GetxController {
   RxInt currentPageSlider = 0.obs;
+  RxInt selectionIndexBottomBar = 0.obs;
+
   List dataSlider = [
     'slide1.jpeg',
     'slide2.jpeg',

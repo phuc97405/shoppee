@@ -134,7 +134,58 @@ class HomePage extends GetView<HomeController> {
                         ),
                       ))
                 ]))
-          ]));
+          ]),
+          bottomNavigationBar: Obx(() => bottomNavigationBar()));
     });
+  }
+
+  BottomNavigationBar bottomNavigationBar() {
+    return BottomNavigationBar(
+      onTap: (value) {
+        controller.selectionIndexBottomBar.value = value;
+      },
+      currentIndex: controller.selectionIndexBottomBar.value,
+      type: BottomNavigationBarType.fixed,
+      unselectedLabelStyle: const TextStyle(
+          fontSize: kDefaultFontSize * 0.7, color: Colors.black),
+      selectedFontSize: kDefaultFontSize * 0.7,
+      selectedItemColor: kPrimaryColor,
+      items: [
+        BottomNavigationBarItem(
+          icon: controller.selectionIndexBottomBar.value == 0
+              ? Text(
+                  '10.10',
+                  style: TextStyle(
+                      fontSize: kDefaultPadding,
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.bold),
+                )
+              : Icon(
+                  Icons.home,
+                ),
+          label: 'Gợi ý hôm nay',
+        ),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.file_copy,
+            ),
+            label: 'Shoppee Feed'),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.video_call_outlined,
+            ),
+            label: 'Shoppe Live'),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications_none_outlined,
+            ),
+            label: 'Thông báo'),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.people_alt_outlined,
+            ),
+            label: 'Tôi'),
+      ],
+    );
   }
 }
