@@ -64,6 +64,9 @@ flutter:
     - assets/icons/bag.svg
     - assets/icons/debit-card.svg
     - assets/icons/shopping-bag.svg
+    - assets/images/tonghop-facebook-ads.jpeg
+    - assets/images/facebook-ads1.png
+    - assets/images/images.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

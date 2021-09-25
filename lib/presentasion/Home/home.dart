@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
@@ -74,69 +75,65 @@ class HomePage extends GetView<HomeController> {
                         }),
                   ),
                 ])),
+            BuildUtilities(controller: controller),
             Container(
-                padding: const EdgeInsets.all(kDefaultFontSize * 0.5),
-                color: kPrimaryColor,
-                height: Get.height * 0.25,
-                width: double.infinity,
-                child: Stack(children: [
-                  GridView.count(
-                    crossAxisCount: 2,
-                    scrollDirection: Axis.horizontal,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 10,
-                    children: List.generate(
-                        controller.listUtilities.length,
-                        (index) => Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                    height: 40,
-                                    width: 40,
-                                    padding: const EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(
-                                          kDefaultFontSize),
-                                    ),
-                                    child: SvgPicture.asset(
-                                      controller.listUtilities[index].urlIcon,
-                                      placeholderBuilder:
-                                          (BuildContext context) =>
-                                              const CircularProgressIndicator(),
-                                    )),
-                                Text(controller.listUtilities[index].title,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: kDefaultFontSize * 0.6,
-                                        color: Colors.white))
-                              ],
-                            )),
+              padding: const EdgeInsets.all(8.0),
+              height: Get.height * 0.15,
+              width: double.infinity,
+              decoration: const BoxDecoration(color: kPrimaryColor),
+              child: Row(
+                children: [
+                  Expanded(
+                    child:
+                        buildPromotion('assets/images/images.png', 'CHƠI NGAY'),
                   ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: 5,
-                          count: (controller.listUtilities.length / 4).round(),
-                          effect: const WormEffect(
-                              spacing: 0.0,
-                              radius: 0.0,
-                              dotWidth: 10.0,
-                              dotHeight: 5.0,
-                              // paintStyle: PaintingStyle.stroke,
-                              strokeWidth: 0.0,
-                              dotColor: Colors.grey,
-                              activeDotColor: Colors.white),
-                        ),
-                      ))
-                ]))
+                  const SizedBox(
+                    width: kDefaultPadding * 0.5,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: buildPromotion(
+                        'assets/images/tonghop-facebook-ads.jpeg', 'CHƠI NGAY'),
+                  ),
+                  const SizedBox(
+                    width: kDefaultPadding * 0.5,
+                  ),
+                  Expanded(
+                    child: buildPromotion(
+                        'assets/images/facebook-ads1.png', 'CHƠI NGAY'),
+                  ),
+                ],
+              ),
+            )
           ]),
           bottomNavigationBar: Obx(() => bottomNavigationBar()));
     });
+  }
+
+  Stack buildPromotion(String urlImage, String title) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: Image.asset(
+            urlImage,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Chip(
+            backgroundColor: Colors.white,
+            // deleteIcon: Icon(Icons.navigate_next, color: Colors.red),
+            label: Text(
+              title,
+              style: const TextStyle(
+                  color: kPrimaryColor, fontSize: kDefaultFontSize * 0.7),
+            ),
+          ),
+        )
+      ],
+    );
   }
 
   BottomNavigationBar bottomNavigationBar() {
@@ -153,39 +150,129 @@ class HomePage extends GetView<HomeController> {
       items: [
         BottomNavigationBarItem(
           icon: controller.selectionIndexBottomBar.value == 0
-              ? Text(
+              ? const Text(
                   '10.10',
                   style: TextStyle(
                       fontSize: kDefaultPadding,
                       color: kPrimaryColor,
                       fontWeight: FontWeight.bold),
                 )
-              : Icon(
+              : const Icon(
                   Icons.home,
                 ),
           label: 'Gợi ý hôm nay',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(
               Icons.file_copy,
             ),
             label: 'Shoppee Feed'),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(
               Icons.video_call_outlined,
             ),
             label: 'Shoppe Live'),
         BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_none_outlined,
-            ),
+            icon: Stack(children: [
+              const Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.notifications_active_outlined,
+                  )),
+              Align(
+                  alignment: const Alignment(0.7, 1),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: kPrimaryColor,
+                        borderRadius: BorderRadius.circular(15)),
+                    // alignment: Alignment.center,
+                    child: const Text(
+                      '99+',
+                      style: TextStyle(fontSize: kDefaultFontSize * 0.7),
+                    ),
+                  ))
+            ]),
             label: 'Thông báo'),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
             icon: Icon(
               Icons.people_alt_outlined,
             ),
             label: 'Tôi'),
       ],
     );
+  }
+}
+
+class BuildUtilities extends StatelessWidget {
+  const BuildUtilities({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final HomeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(kDefaultFontSize * 0.5),
+        color: kPrimaryColor,
+        height: Get.height * 0.25,
+        width: double.infinity,
+        child: Stack(children: [
+          GridView.count(
+            crossAxisCount: 2,
+            scrollDirection: Axis.horizontal,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 10,
+            children: List.generate(
+                controller.listUtilities.length,
+                (index) => Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                            height: 40,
+                            width: 40,
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 1, color: Colors.grey),
+                              borderRadius:
+                                  BorderRadius.circular(kDefaultFontSize),
+                            ),
+                            child: SvgPicture.asset(
+                              controller.listUtilities[index].urlIcon,
+                              placeholderBuilder: (BuildContext context) =>
+                                  const CircularProgressIndicator(),
+                            )),
+                        Text(controller.listUtilities[index].title,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: kDefaultFontSize * 0.6,
+                                color: Colors.white))
+                      ],
+                    )),
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AnimatedSmoothIndicator(
+                  activeIndex: 5,
+                  count: (controller.listUtilities.length / 4).round(),
+                  effect: const WormEffect(
+                      spacing: 0.0,
+                      radius: 0.0,
+                      dotWidth: 10.0,
+                      dotHeight: 5.0,
+                      // paintStyle: PaintingStyle.stroke,
+                      strokeWidth: 0.0,
+                      dotColor: Colors.grey,
+                      activeDotColor: Colors.white),
+                ),
+              ))
+        ]));
   }
 }
