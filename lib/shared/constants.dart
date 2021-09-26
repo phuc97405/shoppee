@@ -7,7 +7,7 @@ const kContentColorDarkTheme = Color(0xFFF5FCF9);
 const kWarninngColor = Color(0xFFF3BB1C);
 const kErrorColor = Color(0xFFF03738);
 
-const kDefaultPadding = 20.0;
+const kDefaultPadding = 18.0;
 const kDefaultFontSize = 16.0;
 const textInputDercoration = InputDecoration(
   // icon: Icon(Icons.lock),
